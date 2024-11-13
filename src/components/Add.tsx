@@ -4,7 +4,13 @@ import { useCartStore } from "@/hooks/useCartStore";
 import { useWixClient } from "@/hooks/useWixClient";
 import { useState } from "react";
 
-const Add = ({
+interface AddProps {
+  productId: string;
+  variantId: string;
+  stockNumber: number;
+}
+
+const Add: React.FC<AddProps> = ({
   productId,
   variantId,
   stockNumber,

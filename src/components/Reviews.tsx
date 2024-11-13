@@ -1,52 +1,47 @@
-const Skeleton = () => {
-  return (
-    <div className="mt-12 flex gap-x-8 gap-y-16 justify-between flex-wrap animate-pulse ">
-      <div className="w-full flex flex-col gap-4 sm:w-[45%] lg:w-[22%]">
-        <div className="w-full h-80 bg-gray-100 rounded-md" />
-        <div className="w-full flex justify-between ">
-          <div className="w-36 h-8 bg-gray-100 rounded-md" />
-          <div className="w-16 h-8 bg-gray-100 rounded-md  ml-auto" />
-          <div className="" />
-        </div>
-        <div className="w-full h-4 bg-gray-100 rounded-md " />
-        <div className="w-1/2 h-4 bg-gray-100 rounded-md " />
-        <div className="w-1/2 h-12 bg-gray-100 rounded-2xl " />
+import Image from "next/image";
+
+const Reviews = async ({ productId }: { productId: string }) => {
+  const reviewRes = await fetch(
+    `https://api.fera.ai/v3/public/reviews?product.id=${productId}&public_key=${process.env.NEXT_PUBLIC_FERA_ID}`
+  );
+  const reviews = await reviewRes.json();
+
+  return reviews.data.map((review: any) => (
+    <div className="flex flex-col gap-4" key={review.id}>
+      {/* USER */}
+      <div className="flex items-center gap-4 font-medium">
+        <Image
+          src={review.customer.avatar_url}
+          alt=""
+          width={32}
+          height={32}
+          className="rounded-full"
+        />
+        <span>{review.customer.display_name}</span>
       </div>
-      <div className="w-full flex flex-col gap-4 sm:w-[45%] lg:w-[22%]">
-        <div className="w-full h-80 bg-gray-100 rounded-md" />
-        <div className="w-full flex justify-between ">
-          <div className="w-36 h-8 bg-gray-100 rounded-md" />
-          <div className="w-16 h-8 bg-gray-100 rounded-md  ml-auto" />
-          <div className="" />
-        </div>
-        <div className="w-full h-4 bg-gray-100 rounded-md " />
-        <div className="w-1/2 h-4 bg-gray-100 rounded-md " />
-        <div className="w-1/2 h-12 bg-gray-100 rounded-2xl " />
+      {/* STARS */}
+      <div className="flex gap-2">
+        {Array.from({ length: review.rating }).map((_, index) => (
+          <Image src="/star.png" alt="" key={index} width={16} height={16} />
+        ))}
       </div>
-      <div className="w-full flex flex-col gap-4 sm:w-[45%] lg:w-[22%]">
-        <div className="w-full h-80 bg-gray-100 rounded-md" />
-        <div className="w-full flex justify-between ">
-          <div className="w-36 h-8 bg-gray-100 rounded-md" />
-          <div className="w-16 h-8 bg-gray-100 rounded-md  ml-auto" />
-          <div className="" />
-        </div>
-        <div className="w-full h-4 bg-gray-100 rounded-md " />
-        <div className="w-1/2 h-4 bg-gray-100 rounded-md " />
-        <div className="w-1/2 h-12 bg-gray-100 rounded-2xl " />
-      </div>
-      <div className="w-full flex flex-col gap-4 sm:w-[45%] lg:w-[22%]">
-        <div className="w-full h-80 bg-gray-100 rounded-md" />
-        <div className="w-full flex justify-between ">
-          <div className="w-36 h-8 bg-gray-100 rounded-md" />
-          <div className="w-16 h-8 bg-gray-100 rounded-md  ml-auto" />
-          <div className="" />
-        </div>
-        <div className="w-full h-4 bg-gray-100 rounded-md " />
-        <div className="w-1/2 h-4 bg-gray-100 rounded-md " />
-        <div className="w-1/2 h-12 bg-gray-100 rounded-2xl " />
+      {/* DESC */}
+      {review.heading && <p>{review.heading}</p>}
+      {review.body && <p>{review.body}</p>}
+      <div className="">
+        {review.media.map((media: any) => (
+          <Image
+            src={media.url}
+            key={media.id}
+            alt=""
+            width={100}
+            height={50}
+            className="object-cover"
+          />
+        ))}
       </div>
     </div>
-  );
+  ));
 };
 
-export default Skeleton;
+export default Reviews;
