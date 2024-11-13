@@ -22,6 +22,7 @@
     "react-confetti": "^6.1.0",
     "react-dom": "^18",
     "redirects": "^1.1.1",
+    "timeago.js": "^4.0.2",
     "zustand": "^5.0.1"
   },
   "devDependencies": {

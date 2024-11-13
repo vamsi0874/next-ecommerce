@@ -3,7 +3,7 @@ import { updateUser } from "@/lib/actions";
 import { wixClientServer } from "@/lib/wixClientServer";
 import { members } from "@wix/members";
 import Link from "next/link";
-// import { format } from "timeago.js";
+import { format } from "timeago.js";
 
 const ProfilePage = async () => {
   const wixClient = await wixClientServer();
@@ -39,14 +39,14 @@ const ProfilePage = async () => {
           <input
             type="text"
             name="firstName"
-            placeholder={user.member?.contact?.firstName || "John"}
+            placeholder={user.member?.contact?.firstName || "V"}
             className="ring-1 ring-gray-300 rounded-md p-2 max-w-96"
           />
           <label className="text-sm text-gray-700">Surname</label>
           <input
             type="text"
             name="lastName"
-            placeholder={user.member?.contact?.lastName || "Doe"}
+            placeholder={user.member?.contact?.lastName || "M"}
             className="ring-1 ring-gray-300 rounded-md p-2 max-w-96"
           />
           <label className="text-sm text-gray-700">Phone</label>
@@ -85,8 +85,8 @@ const ProfilePage = async () => {
                 ${order.priceSummary?.subtotal?.amount}
               </span>
               {order._createdDate && (
-                <span></span>
-                // <span className="w-1/4">{format(order._createdDate)}</span>
+               
+                <span className="w-1/4">{format(order._createdDate)}</span>
               )}
               <span className="w-1/4">{order.status}</span>
             </Link>
